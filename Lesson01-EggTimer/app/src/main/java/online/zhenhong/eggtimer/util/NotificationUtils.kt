@@ -24,6 +24,7 @@ import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 import online.zhenhong.eggtimer.MainActivity
 import online.zhenhong.eggtimer.R
+import online.zhenhong.eggtimer.receiver.SnoozeReceiver
 
 // Notification ID.
 private val NOTIFICATION_ID = 0
@@ -59,7 +60,14 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .bigPicture(eggImage)
         .bigLargeIcon(null)
 
-    // TODO: Step 2.2 add snooze action
+    // COMPLETED: Step 2.2 add snooze action
+    val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)
+    val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(
+        applicationContext,
+        REQUEST_CODE,
+        snoozeIntent,
+        PendingIntent.FLAG_ONE_SHOT
+    )
 
     // COMPLETED: Step 1.2 get an instance of NotificationCompat.Builder
     // Build the notification
@@ -85,7 +93,12 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setStyle(bigPicStyle)
         .setLargeIcon(eggImage)  // image appear as a thumbnail whens the notification is collapsed
 
-    // TODO: Step 2.3 add snooze action
+        // COMPLETED: Step 2.3 add snooze action
+        .addAction(
+            R.drawable.egg_icon,
+            applicationContext.getString(R.string.snooze),
+            snoozePendingIntent
+        )
 
     // TODO: Step 2.5 set priority
 
