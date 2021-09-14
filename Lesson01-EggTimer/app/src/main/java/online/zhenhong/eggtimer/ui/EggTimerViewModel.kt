@@ -18,12 +18,14 @@ package online.zhenhong.eggtimer.ui
 
 import android.app.AlarmManager
 import android.app.Application
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
 import android.os.SystemClock
 import androidx.core.app.AlarmManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -33,6 +35,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import online.zhenhong.eggtimer.R
 import online.zhenhong.eggtimer.receiver.AlarmReceiver
+import online.zhenhong.eggtimer.util.cancelNotifications
 
 class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
 
@@ -64,6 +67,10 @@ class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
 
 
     private lateinit var timer: CountDownTimer
+
+    private val notificationManager = ContextCompat.getSystemService(
+        app, NotificationManager::class.java
+    ) as NotificationManager
 
     init {
         _alarmOn.value = PendingIntent.getBroadcast(
@@ -123,7 +130,8 @@ class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
                 }
                 val triggerTime = SystemClock.elapsedRealtime() + selectedInterval
 
-                // TODO: Step 1.15 call cancel notification
+                // COMPLETED: Step 1.15 call cancel notification
+                notificationManager.cancelNotifications()
 
                 AlarmManagerCompat.setExactAndAllowWhileIdle(
                     alarmManager,
