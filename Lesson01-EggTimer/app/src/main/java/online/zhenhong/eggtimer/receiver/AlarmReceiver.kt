@@ -16,19 +16,25 @@
 
 package online.zhenhong.eggtimer.receiver
 
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
+import androidx.core.content.ContextCompat
 import online.zhenhong.eggtimer.R
+import online.zhenhong.eggtimer.util.sendNotification
 
-class AlarmReceiver: BroadcastReceiver() {
+class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        // TODO: Step 1.10 [Optional] remove toast
-        Toast.makeText(context, context.getText(R.string.eggs_ready), Toast.LENGTH_SHORT).show()
+        // COMPLETED: Step 1.10 [Optional] remove toast
 
-        // TODO: Step 1.9 add call to sendNotification
+        // COMPLETED: Step 1.9 add call to sendNotification
+        val notificationManager = ContextCompat.getSystemService(
+            context, NotificationManager::class.java
+        ) as NotificationManager
+
+        notificationManager.sendNotification(context.getString(R.string.eggs_ready), context)
 
     }
 
