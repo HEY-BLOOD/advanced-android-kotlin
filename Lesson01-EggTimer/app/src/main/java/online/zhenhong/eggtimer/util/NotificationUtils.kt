@@ -20,6 +20,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 import online.zhenhong.eggtimer.MainActivity
 import online.zhenhong.eggtimer.R
@@ -49,7 +50,14 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         PendingIntent.FLAG_UPDATE_CURRENT
     )
 
-    // TODO: Step 2.0 add style
+    // COMPLETED: Step 2.0 add style
+    val eggImage = BitmapFactory.decodeResource(
+        applicationContext.resources,
+        R.drawable.cooked_egg
+    )
+    val bigPicStyle = NotificationCompat.BigPictureStyle()
+        .bigPicture(eggImage)
+        .bigLargeIcon(null)
 
     // TODO: Step 2.2 add snooze action
 
@@ -73,7 +81,9 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)
 
-    // TODO: Step 2.1 add style to builder
+        // COMPLETED: Step 2.1 add style to builder
+        .setStyle(bigPicStyle)
+        .setLargeIcon(eggImage)  // image appear as a thumbnail whens the notification is collapsed
 
     // TODO: Step 2.3 add snooze action
 
