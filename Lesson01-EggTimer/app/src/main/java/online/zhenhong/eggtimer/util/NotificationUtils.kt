@@ -100,7 +100,8 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
             snoozePendingIntent
         )
 
-    // TODO: Step 2.5 set priority
+        // COMPLETED: Step 2.5 set priority - Importance Levels for Android 7.1 (API 25) or lower
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
 
     // COMPLETED: Step 1.4 call notify
     // Deliver the notification
